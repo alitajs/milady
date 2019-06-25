@@ -1,0 +1,59 @@
+{
+  "swagger": "2.0",
+  "info": { "version": "1.0.0", "title": "Api Document", "contact": {}, "license": {} },
+  "host": "ant-design-pro.netlify.com",
+  "basePath": "/",
+  "tags": [{ "name": "fake_chart_data", "description": "图表数据" }],
+  "paths": {
+    "/": {},
+    "/api/fake_chart_data": {
+      "get": {
+        "tags": ["fake_chart_data"],
+        "summary": "图表数据",
+        "description": "图表数据:假的图表数据，这里是对这个接口的说明",
+        "operationId": "fakeChartDataPOST",
+        "consumes": ["application/json"],
+        "produces": ["application/json;charset=UTF-8"],
+        "parameters": [{ "name": "q", "in": "query", "description": "请求参数", "required": true, "type": "string" }],
+        "responses": { "200": { "description": "OK", "schema": { "$ref": "#/definitions/AnalysisData" } } }
+      }
+    },
+    "/api/forms": {
+      "post": {
+        "tags": ["表单接口"],
+        "summary": "表单接口 ",
+        "description": "表单：不知道是啥，这就是一个描述",
+        "operationId": "apiFormsPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          { "name": "token", "in": "header", "description": "token", "required": false, "type": "string" },
+          { "name": "type", "in": "query", "description": "类型", "required": true, "type": "string" }
+        ],
+        "responses": { "200": { "description": "OK", "schema": { "$ref": "#/definitions/AnalysisData" } } }
+      }
+    }
+  },
+  "definitions": {
+    "AnalysisData": {
+      "properties": {
+        "x": { "type": "string", "description": "横轴值" },
+        "y": { "type": "string", "description": "纵轴值" }
+      }
+    },
+    "分页数据«优惠券对象»": {
+      "required": ["content"],
+      "properties": {
+        "content": {
+          "type": "array",
+          "description": "数据列表，永不为null",
+          "items": { "$ref": "#/definitions/优惠券对象" }
+        },
+        "number": { "type": "integer", "format": "int32", "description": "当前页数" },
+        "size": { "type": "integer", "format": "int32", "description": "每页显示数量" },
+        "totalElements": { "type": "integer", "format": "int64", "description": "总记录数" },
+        "totalPages": { "type": "integer", "format": "int32", "description": "总页数" }
+      }
+    }
+  }
+}

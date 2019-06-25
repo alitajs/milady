@@ -1,0 +1,37 @@
+{
+  "name": "codegen",
+  "version": "0.0.1",
+  "description": "Generate the front-end code by parsing the interface document",
+  "main": "index.js",
+  "bin": {
+    "umi-codegen": "./bin/codegen.js"
+  },
+  "scripts": {
+    "build": "father-build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alitajs/codegen.git"
+  },
+  "keywords": [
+    "codegen",
+    "umi",
+    "alitajs"
+  ],
+  "author": "xiaohuoni",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alitajs/codegen/issues"
+  },
+  "homepage": "https://github.com/alitajs/codegen#readme",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "typescript": "^3.5.2",
+    "umi-request": "^1.0.8"
+  },
+  "devDependencies": {
+    "father-build": "^1.1.1"
+  }
+}

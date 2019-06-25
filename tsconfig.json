@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "outDir": "lib/",
+    "baseUrl": ".",
+    "strict": true,
+    "strictNullChecks": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}
