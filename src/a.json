@@ -1,0 +1,169 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0",
+        "contact": {},
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0"
+        }
+    },
+    "host": "services.diamondyuan.com",
+    "basePath": "/365call-api",
+    "tags": [
+        {
+            "name": "wechat-controller",
+            "description": "Wechat Controller"
+        },
+        {
+            "name": "exchange-controller",
+            "description": "Exchange Controller"
+        },
+        {
+            "name": "qiniu-controller",
+            "description": "Qiniu Controller"
+        },
+        {
+            "name": "playstation-controller",
+            "description": "Playstation Controller"
+        },
+        {
+            "name": "account-controller",
+            "description": "Account Controller"
+        }
+    ],
+    "paths": {
+        "/api/v1/games/price/{id}": {
+            "get": {
+                "tags": [
+                    "playstation-controller"
+                ],
+                "summary": "根据游戏Id获取游戏价格曲线",
+                "operationId": "getpriceUsingGET",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json",
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "region",
+                        "in": "query",
+                        "description": "region",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "HONG_KONG",
+                            "JAPAN",
+                            "UNITED_KINGDOM",
+                            "UNITED_STATES",
+                            "CHINA"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ResultWrapper«ListResult«PlaystationGamePrice»»"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ResultWrapper«ListResult«PlaystationGamePrice»»": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "data": {
+                    "$ref": "#/definitions/ListResult«PlaystationGamePrice»"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "ListResult«PlaystationGamePrice»": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PlaystationGamePrice"
+                    }
+                },
+                "size": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
+        "PlaystationGamePrice": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "non_plus_discount_percentage": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "non_plus_user_price": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "plus_discount_percentage": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "plus_user_price": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "region": {
+                    "type": "string",
+                    "enum": [
+                        "HONG_KONG",
+                        "JAPAN",
+                        "UNITED_KINGDOM",
+                        "UNITED_STATES",
+                        "CHINA"
+                    ]
+                },
+                "sku_id": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
