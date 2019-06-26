@@ -32,6 +32,61 @@
         ],
         "responses": { "200": { "description": "OK", "schema": { "$ref": "#/definitions/分页数据«优惠券对象»" } } }
       }
+    },
+    "/api/v3/a9vg": {
+      "get": {
+        "tags": ["playstation-controller"],
+        "summary": "获取打折贴",
+        "operationId": "getA9vgPostUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["application/json", "*/*"],
+        "parameters": [
+          {
+            "name": "region",
+            "in": "query",
+            "description": "region",
+            "required": true,
+            "type": "string",
+            "enum": ["HONG_KONG", "JAPAN", "UNITED_KINGDOM", "UNITED_STATES", "CHINA"]
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "sort",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "RELEASE_DATE_DESC",
+              "RELEASE_DATE_ASC",
+              "NAME_DESC",
+              "NAME_ASC",
+              "PRICE_DESC",
+              "PRICE_ASC",
+              "DISCOUNT_PERCENTAGE_DESC",
+              "DISCOUNT_PERCENTAGE_ASC",
+              "SCORE_DESC",
+              "PLUS_SALE_START_DATE_DESC",
+              "PLUS_SALE_END_DATE_ASC"
+            ]
+          },
+          {
+            "name": "taobao",
+            "in": "query",
+            "description": "taobao",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          { "name": "sample", "in": "query", "description": "sample", "required": false, "type": "boolean" },
+          { "name": "game", "in": "query", "description": "game", "required": false, "type": "boolean" }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "string" } },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
     }
   },
   "definitions": {

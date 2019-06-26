@@ -1,6 +1,8 @@
-import { readFileSync, writeFile } from 'fs';
-import { join, dirname, basename, extname } from 'path';
-import SwaggerData from './a.json';
+import { readFileSync, writeFile, existsSync, mkdir } from 'fs';
+import { join } from 'path';
+import axios from 'axios';
+import { outputFileSync } from "fs-extra";
+// import SwaggerData from './a.json';
 const GetMethodString = "{\n    params\n  }";
 const PostMethodString = "{\n    method: 'POST',\n    data: params\n  }";
 
@@ -48,7 +50,7 @@ function generateName(api: string) {
 function toUpperCase(str: string) {
     return str.replace(str[0], str[0].toUpperCase());
 }
-function generateType({ type, items }: any) {
+function generateType({ type, items, $ref }: any) {
     if (type === 'integer') {
         return 'number'
     }
@@ -62,6 +64,9 @@ function generateType({ type, items }: any) {
                 return '[]'
             }
         }
+    }
+    if ($ref) {
+        return generateInterfaceName($ref)
     }
     return type;
 }
@@ -82,11 +87,14 @@ let hasChineseArr = {} as any;
 let hasChineseCount = 0;
 function generatePromise(resData: any) {
     let promise = ''
+    if (!resData) {
+        return 'any'
+    }
     if (resData.$ref) {
         promise = resData.$ref.replace('#/definitions/', '').replace(new RegExp('«', "g"), '').replace(new RegExp('»', "g"), '');
     } else if (resData.item) {
         promise = resData.item['$ref'].replace('#/definitions/', '').replace(new RegExp('«', "g"), '').replace(new RegExp('»', "g"), '');
-    }else if(resData.type){
+    } else if (resData.type) {
         promise = resData.type
     }
     const hasChinese = /[^\u4e00-\u9fa5]+/.test(promise);
@@ -119,12 +127,30 @@ function generateInterfaceName(input: string) {
     return changeText(input);
 }
 
-export default function () {
+
+export default function (swaggerUrl: any, args: { out: any; }) {
+    if (!swaggerUrl) {
+        console.log('必须携带URL地址，如alita-codegen https://xx.x.x/abc/v2/api-docs#/')
+        return;
+    }
+    axios
+        .get(swaggerUrl)
+        .then(function ({ data }) {
+            main(data, {
+                outPath: args.out || ''
+            })
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function main(SwaggerData: { tags?: never[] | undefined; paths: any; definitions: any; }, options: { outPath: any; }) {
     const { tags = [], paths, definitions } = SwaggerData;
     let outPutStr = generateHead(SwaggerData);
     Object.keys(definitions).forEach(defItem => {
-        outPutStr += `interface ${generateInterfaceName(defItem)} {\n`
-        const properties = definitions[defItem].properties
+        outPutStr += `interface ${generateInterfaceName(defItem)} {\n`;
+        const properties = definitions[defItem].properties || {};
         Object.keys(properties).forEach(subDefItem => {
             let defItemStr = "   /**\n";
             defItemStr += `    * @description ${properties[subDefItem].description || ''}\n`
@@ -138,7 +164,7 @@ export default function () {
     Object.keys(paths).forEach(item => {
         const itemData = paths[item];
         Object.keys(itemData).forEach(subItem => {
-            additionalParameters={};
+            additionalParameters = {};
             const subItemData = itemData[subItem];
             const { summary, description, tags: subTags, responses, parameters = [] } = subItemData;
             const resData = responses['200'].schema;
@@ -190,11 +216,7 @@ export default function () {
             outPutStr += tplContent;
         })
     })
-    writeFile('out/api.ts', outPutStr, function (err) {
-        if (err) {
-            console.log('error', err);
-        } else {
-            console.log('success');
-        }
-    });
+    const outPath = options.outPath ? options.outPath : 'out/api.ts';
+    outputFileSync(outPath, outPutStr, "utf-8");
+    console.log('文件创建完成')
 }
