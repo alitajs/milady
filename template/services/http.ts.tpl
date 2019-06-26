@@ -7,5 +7,5 @@
  * @param params <%= FunctionParams %>
  */
 export async function <%= FunctionName %>(params?: <%= FunctionParams %>): Promise<<%= FunctionPromise %>> {
-    return request('<%= FunctionUrl %>', <%= FunctionParamsMethod %>);
+    return request(<%= FunctionUrl %>, <%= FunctionParamsMethod %>);
 }
