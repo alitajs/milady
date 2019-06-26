@@ -30,7 +30,7 @@
           { "name": "token", "in": "header", "description": "token", "required": false, "type": "string" },
           { "name": "type", "in": "query", "description": "类型", "required": true, "type": "string" }
         ],
-        "responses": { "200": { "description": "OK", "schema": { "$ref": "#/definitions/AnalysisData" } } }
+        "responses": { "200": { "description": "OK", "schema": { "$ref": "#/definitions/分页数据«优惠券对象»" } } }
       }
     }
   },
