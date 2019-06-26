@@ -1,13 +1,14 @@
 {
-  "name": "codegen",
-  "version": "0.0.1",
+  "name": "@alitajs/codegen",
+  "version": "0.0.3",
   "description": "Generate the front-end code by parsing the interface document",
-  "main": "index.js",
+  "main": "lib/index.js",
   "bin": {
-    "umi-codegen": "./bin/codegen.js"
+    "alita-codegen": "./bin/codegen.js"
   },
   "scripts": {
     "build": "father-build",
+    "publish": "npm publish --access public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +20,11 @@
     "umi",
     "alitajs"
   ],
+  "files": [
+    "lib",
+    "template",
+    "bin"
+  ],
   "author": "xiaohuoni",
   "license": "MIT",
   "bugs": {
@@ -26,12 +32,16 @@
   },
   "homepage": "https://github.com/alitajs/codegen#readme",
   "dependencies": {
+    "axios": "^0.19.0",
     "fs": "^0.0.1-security",
+    "fs-extra": "^8.0.1",
     "path": "^0.12.7",
     "typescript": "^3.5.2",
-    "umi-request": "^1.0.8"
+    "umi-request": "^1.0.8",
+    "yargs-parser": "^13.1.1"
   },
   "devDependencies": {
+    "@types/fs-extra": "^7.0.0",
     "father-build": "^1.1.1"
   }
 }
