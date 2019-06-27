@@ -51,6 +51,7 @@
     "@types/node-fetch": "^2.3.7",
     "fs": "^0.0.1-security",
     "fs-extra": "^8.0.1",
+    "node-fetch": "^2.6.0",
     "path": "^0.12.7",
     "typescript": "^3.5.2",
     "umi-request": "^1.0.8",

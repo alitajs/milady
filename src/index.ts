@@ -1,7 +1,8 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
 import fetch from 'node-fetch';
+import { join } from 'path';
 import { outputFileSync } from 'fs-extra';
+import { readFileSync } from 'fs';
+
 // import SwaggerData from './a.json';
 const GetMethodString = '{\n    params\n  }';
 const PostMethodString = "{\n    method: 'POST',\n    data: params\n  }";
@@ -146,9 +147,7 @@ export default async function(swaggerUrl: any, args: { out: any }) {
   // 获取数据
   const data: any = await getData(swaggerUrl);
   // 处理数据
-  const file = handleData(data, {
-    outPath: args.out || '',
-  });
+  const file = handleData(data);
   // 生成代码
   codeGen(
     {
@@ -166,10 +165,7 @@ async function getData(swaggerUrl: string) {
   }
   return data;
 }
-function handleData(
-  SwaggerData: { tags?: never[] | undefined; paths: any; definitions: any },
-  options: { outPath: any },
-) {
+function handleData(SwaggerData: { tags?: never[] | undefined; paths: any; definitions: any }) {
   const { tags = [], paths, definitions } = SwaggerData;
   let outPutStr = generateHead(SwaggerData);
   Object.keys(definitions).forEach(defItem => {
