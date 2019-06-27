@@ -10,9 +10,21 @@
     "build": "father-build",
     "publish": "npm publish --access public",
     "prettier": "prettier -c --write **/*",
-    "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./",
+    "eslint": "eslint --ext .js,.jsx,.ts,.tsx --format=pretty ./",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pre-commit": "npm run prettier && git add && npm run eslint"
+    "lint-staged": "lint-staged"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+      "npm run prettier",
+      "git add"
+    ],
+    "**/*.{js,jsx,ts,tsx}": "npm run eslint"
   },
   "repository": {
     "type": "git",
@@ -47,6 +59,8 @@
     "@types/fs-extra": "^7.0.0",
     "@umijs/fabric": "^1.0.9",
     "father-build": "^1.1.1",
+    "husky": "^2.4.1",
+    "lint-staged": "^8.2.1",
     "prettier": "^1.18.2"
   }
 }
