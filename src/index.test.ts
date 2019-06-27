@@ -1,13 +1,13 @@
 import {
-  changeText,
   changeApi,
   changeParam,
-  generateName,
-  toUpperCase,
-  generateType,
+  changeText,
   generateHead,
-  generatePromise,
   generateInterfaceName,
+  generateName,
+  generatePromise,
+  generateType,
+  toUpperCase,
 } from './index';
 
 test('changeText', () => {
