@@ -12,7 +12,8 @@
     "prettier": "prettier -c --write **/*",
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx --format=pretty ./",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "husky": {
     "hooks": {
