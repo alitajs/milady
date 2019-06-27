@@ -44,7 +44,7 @@ function changeParam(nameArr: any[]) {
 }
 function generateName(api: string) {
   const nameArr = changeParam(api.split('/'));
-  let name = nameArr![nameArr.length - 2]
+  let name = nameArr[nameArr.length - 2]
     ? nameArr[nameArr.length - 2] + toUpperCase(nameArr[nameArr.length - 1])
     : nameArr[nameArr.length - 1];
   name = name.replace(/-/g, '_');
@@ -138,6 +138,7 @@ function generateInterfaceName(text: string) {
   return changeText(input);
 }
 
+// eslint-disable-next-line space-before-function-paren
 export default function(swaggerUrl: any, args: { out: any }) {
   if (!swaggerUrl) {
     console.log('必须携带URL地址，如alita-codegen https://xx.x.x/abc/v2/api-docs#/');
