@@ -4,7 +4,7 @@
   "description": "Generate the front-end code by parsing the interface document",
   "main": "lib/index.js",
   "bin": {
-    "alita-codegen": "./bin/codegen.js"
+    "milady": "./bin/codegen.js"
   },
   "scripts": {
     "build": "father-build",
@@ -48,7 +48,7 @@
   },
   "homepage": "https://github.com/alitajs/codegen#readme",
   "dependencies": {
-    "axios": "^0.19.0",
+    "@types/node-fetch": "^2.3.7",
     "fs": "^0.0.1-security",
     "fs-extra": "^8.0.1",
     "path": "^0.12.7",
