@@ -14,8 +14,18 @@
         "operationId": "fakeChartDataPOST",
         "consumes": ["application/json"],
         "produces": ["application/json;charset=UTF-8"],
-        "parameters": [{ "name": "q", "in": "query", "description": "请求参数", "required": true, "type": "string" }],
-        "responses": { "200": { "description": "OK", "schema": { "$ref": "#/definitions/AnalysisData" } } }
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "请求参数",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "$ref": "#/definitions/AnalysisData" } }
+        }
       }
     },
     "/api/forms": {
@@ -27,10 +37,24 @@
         "consumes": ["application/json"],
         "produces": ["*/*"],
         "parameters": [
-          { "name": "token", "in": "header", "description": "token", "required": false, "type": "string" },
-          { "name": "type", "in": "query", "description": "类型", "required": true, "type": "string" }
+          {
+            "name": "token",
+            "in": "header",
+            "description": "token",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "类型",
+            "required": true,
+            "type": "string"
+          }
         ],
-        "responses": { "200": { "description": "OK", "schema": { "$ref": "#/definitions/分页数据«优惠券对象»" } } }
+        "responses": {
+          "200": { "description": "OK", "schema": { "$ref": "#/definitions/分页数据«优惠券对象»" } }
+        }
       }
     },
     "/api/v3/a9vg": {
@@ -77,8 +101,20 @@
             "type": "integer",
             "format": "int32"
           },
-          { "name": "sample", "in": "query", "description": "sample", "required": false, "type": "boolean" },
-          { "name": "game", "in": "query", "description": "game", "required": false, "type": "boolean" }
+          {
+            "name": "sample",
+            "in": "query",
+            "description": "sample",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "game",
+            "in": "query",
+            "description": "game",
+            "required": false,
+            "type": "boolean"
+          }
         ],
         "responses": {
           "200": { "description": "OK", "schema": { "type": "string" } },

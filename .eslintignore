@@ -1,0 +1,6 @@
+/scripts
+/config
+**/node_modules/**
+/lib
+/es
+/template
