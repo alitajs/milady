@@ -96,6 +96,6 @@ test('generatePromise', () => {
 });
 
 test('generateInterfaceName', () => {
-  expect(generateInterfaceName('分页数据«优惠券对象»')).toEqual('TemporaryVariable');
+  expect(generateInterfaceName('分页数据«优惠券对象»')).toEqual('TemporaryVariable0');
   expect(generateInterfaceName('AnalysisData«List»')).toEqual('AnalysisDataList');
 });
