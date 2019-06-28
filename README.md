@@ -2,7 +2,15 @@
 
 Generate the front-end code by parsing the interface document
 
-## 实现相关
+## what
+
+这是一个通过 swagger 的 url 自动化生成代码的项目。
+
+## why
+
+因为使用 umi 途中需要写很多重复的 service 文件和 mock 文件，故建立此项目来自动化这些重复的工作。
+
+## how
 
 ### 命令行方案
 
@@ -21,14 +29,14 @@ Generate the front-end code by parsing the interface document
   - 配置：
 
   ```js
-  export default {
-    swaggerUrl: '',
+  exports.default = {
+    swaggerUrl: '', //推荐的，优先加载命令行的url，命令行没有再加载配置的url
     plugins: [
       {
         outPath: '',
         handelData: () => {},
       },
-    ],
+    ], //可选的
   };
   ```
 
