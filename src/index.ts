@@ -1,7 +1,8 @@
-import { readFileSync } from 'fs';
+import fetch from 'node-fetch';
 import { join } from 'path';
-import axios from 'axios';
 import { outputFileSync } from 'fs-extra';
+import { readFileSync } from 'fs';
+
 // import SwaggerData from './a.json';
 const GetMethodString = '{\n    params\n  }';
 const PostMethodString = "{\n    method: 'POST',\n    data: params\n  }";
@@ -139,27 +140,32 @@ export function generateInterfaceName(text: string) {
 }
 
 // eslint-disable-next-line space-before-function-paren
-export default function(swaggerUrl: any, args: { out: any }) {
+export default async function(swaggerUrl: any, args: { out: any }) {
   if (!swaggerUrl) {
-    console.log('必须携带URL地址，如alita-codegen https://xx.x.x/abc/v2/api-docs#/');
-    return;
+    console.log('必须携带URL地址，如milady https://xx.x.x/abc/v2/api-docs#/');
   }
-  axios
-    .get(swaggerUrl)
-    .then(({ data }) => {
-      main(data, {
-        outPath: args.out || '',
-      });
-    })
-    .catch(error => {
-      console.log(error);
-    });
+  // 获取数据
+  const data: any = await getData(swaggerUrl);
+  // 处理数据
+  const file = handleData(data);
+  // 生成代码
+  codeGen(
+    {
+      outPath: args.out || '',
+    },
+    file,
+  );
 }
-
-function main(
-  SwaggerData: { tags?: never[] | undefined; paths: any; definitions: any },
-  options: { outPath: any },
-) {
+async function getData(swaggerUrl: string) {
+  const res = await fetch(swaggerUrl);
+  const data = await res.json();
+  const error = await data.catch;
+  if (error) {
+    console.log(error);
+  }
+  return data;
+}
+function handleData(SwaggerData: { tags?: never[] | undefined; paths: any; definitions: any }) {
   const { tags = [], paths, definitions } = SwaggerData;
   let outPutStr = generateHead(SwaggerData);
   Object.keys(definitions).forEach(defItem => {
@@ -174,7 +180,6 @@ function main(
     });
     outPutStr += '}\n';
   });
-
   Object.keys(paths).forEach(item => {
     const itemData = paths[item];
     Object.keys(itemData).forEach(subItem => {
@@ -233,7 +238,14 @@ function main(
       outPutStr += tplContent;
     });
   });
-  const outPath = options.outPath ? options.outPath : 'out/api.ts';
-  outputFileSync(outPath, outPutStr, 'utf-8');
+  const file = [{ fileName: 'api.js', fileStr: outPutStr }];
+  return file;
+}
+function codeGen(options: { outPath: any }, file: { fileName: string; fileStr: string }[]) {
+  file.forEach(element => {
+    let outPath = options.outPath ? options.outPath : 'out/';
+    outPath = join(outPath, element.fileName);
+    outputFileSync(outPath, element.fileStr, 'utf-8');
+  });
   console.log('文件创建完成');
 }
