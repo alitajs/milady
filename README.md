@@ -16,8 +16,29 @@ Generate the front-end code by parsing the interface document
 
 ### 主函数
 
-获取数据：通过 node-fetch 和配置的 url 拿到 swagger 数据。
+- 获取数据：通过 node-fetch 和配置的 url 拿到 swagger 数据。
 
-处理数据：内置处理方式： mock 数据： 1、支持 mockjs 2、支持配置数据外层，不配置则为默认值，如`{code:200,msg:'成功',data:''}` service 数据： 1、支持 js、ts 配置
+  - 配置：
 
-写入数据：配置文件获得输出文件夹路径，处理数据得到数组`[{ fileName: '', fileStr: '' }]`
+  ```js
+  export default {
+    swaggerUrl: '',
+    plugins: [
+      {
+        outPath: '',
+        handelData: () => {},
+      },
+    ],
+  };
+  ```
+
+- 处理数据：
+
+  - 内置处理方式：
+    - mock 数据：
+    1. 支持 mockjs
+    2. 支持配置数据外层，不配置则为默认值，如`{code:200,msg:'成功',data:''}`
+    - service 数据：
+    1. 支持 js、ts 配置
+
+- 写入数据：配置文件获得输出文件夹路径，处理数据得到数组`[{ fileName: '', fileStr: '' }]`
