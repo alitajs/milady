@@ -2,20 +2,46 @@
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const yParser = require('yargs-parser');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { join } = require('path');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { existsSync } = require('fs');
 
-const argv = yParser(process.argv.slice(2));
-const [url] = argv._;
-const nodeVersion = process.versions.node;
-const versions = nodeVersion.split('.');
-const major = versions[0];
-const minor = versions[1];
-
-if (major * 10 + minor * 1 < 65) {
-  // eslint-disable-next-line no-console
-  console.log(`Node version must >= 6.5, but got ${major}.${minor}`);
-  process.exit(1);
+function checkVersion() {
+  const nodeVersion = process.versions.node;
+  const versions = nodeVersion.split('.');
+  const major = versions[0];
+  const minor = versions[1];
+  if (major * 10 + minor * 1 < 65) {
+    // eslint-disable-next-line no-console
+    console.log(`Node version must >= 6.5, but got ${major}.${minor}`);
+    process.exit(1);
+  }
+}
+function getArgv() {
+  const argv = yParser(process.argv.slice(2));
+  const [url] = argv._;
+  return url;
+}
+function getParams() {
+  let config = {
+    swaggerUrl: '',
+  };
+  const path = join(process.cwd(), '.miladyrc.js');
+  if (existsSync(path)) {
+    try {
+      // eslint-disable-next-line  global-require,import/no-dynamic-require
+      config = require(path).default;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  config.swaggerUrl = getArgv() ? getArgv() : config.swaggerUrl;
+  console.log(config);
+  return config;
 }
 
-const codegen = require('../lib/index').default;
+checkVersion();
+const milady = require('../lib/index').default;
 
-codegen(url, argv);
+milady(getParams());
