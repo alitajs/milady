@@ -197,7 +197,7 @@ export function generateServiceFiles(SwaggerData: {
         return p;
       });
       definition += '}\n';
-      const tpl = join(__dirname, '../../../template/services/http.ts.tpl');
+      const tpl = join(__dirname, '../../../template/serviceTs/http.ts.tpl');
       let tplContent = readFileSync(tpl, 'utf-8');
       tplContent = tplContent
         .replace('<%= InterfaceDefinition %>', definition)
@@ -216,6 +216,6 @@ export function generateServiceFiles(SwaggerData: {
   return file;
 }
 export default {
-  outPath: 'out1/',
+  outPath: 'src/services',
   handelData: generateServiceFiles,
 };
