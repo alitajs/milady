@@ -9,7 +9,13 @@ import mock from './plugins/mock';
 import serviceJs from './plugins/serviceJs';
 
 // eslint-disable-next-line space-before-function-paren
-export default async function({ swaggerUrl, plugins }: { swaggerUrl: string; plugins: any[] }) {
+export default async function({
+  swaggerUrl,
+  plugins = [],
+}: {
+  swaggerUrl: string;
+  plugins: any[];
+}) {
   if (!swaggerUrl) {
     console.log('必须携带URL地址，如milady https://xx.x.x/abc/v2/api-docs#/');
     return;
@@ -50,7 +56,9 @@ function handleData(
   });
   // 加载配置插件
   if (plugins.length !== 0) {
-    console.log('加载插件');
+    plugins.forEach(element => {
+      directory.push(element);
+    });
   }
   return directory;
 }
