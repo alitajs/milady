@@ -2,7 +2,11 @@ import fetch from 'node-fetch';
 import { join } from 'path';
 import { outputFileSync } from 'fs-extra';
 // eslint-disable-next-line sort-imports
-import service from './handelData/service';
+import serviceTs from './plugins/serviceTs';
+// eslint-disable-next-line sort-imports
+import mock from './plugins/mock';
+// eslint-disable-next-line sort-imports
+import serviceJs from './plugins/serviceJs';
 
 // eslint-disable-next-line space-before-function-paren
 export default async function({ swaggerUrl, plugins }: { swaggerUrl: string; plugins: any[] }) {
@@ -33,8 +37,16 @@ function handleData(
   const directory = [];
   // 加载默认插件
   directory.push({
-    outPath: service.outPath,
-    file: service.handelData(SwaggerData),
+    outPath: serviceTs.outPath,
+    file: serviceTs.handelData(SwaggerData),
+  });
+  directory.push({
+    outPath: serviceJs.outPath,
+    file: serviceJs.handelData(SwaggerData),
+  });
+  directory.push({
+    outPath: mock.outPath,
+    file: mock.handelData(SwaggerData),
   });
   // 加载配置插件
   if (plugins.length !== 0) {
