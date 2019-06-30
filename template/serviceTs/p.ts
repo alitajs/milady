@@ -1,4 +1,3 @@
-
 // "/api/forms": {
 //     "post": {
 //       "tags": ["表单接口"],
@@ -25,25 +24,25 @@
 import request from 'umi-request';
 
 interface VisitData {
-    /**
-     * @description 横轴值
-     */
-    x: string;
-    /**
-     * @description 纵轴值
-     */
-    y: string;
+  /**
+   * @description 横轴值
+   */
+  x: string;
+  /**
+   * @description 纵轴值
+   */
+  y: string;
 }
 
 interface ApiFormsQuery {
-    /**
-     * @description token
-     */
-    type: string;
+  /**
+   * @description token
+   */
+  type: string;
 }
 
 interface ApiFormsResponse {
-    visitData: VisitData;
+  visitData: VisitData;
 }
 
 /**
@@ -54,8 +53,8 @@ interface ApiFormsResponse {
  * @returns {visitData:VisitData}
  */
 export async function apiForms(params?: ApiFormsQuery): Promise<VisitData> {
-    return request('/api/forms', {
-        method: 'POST',
-        data: params,
-    });
+  return request('/api/forms', {
+    method: 'POST',
+    data: params,
+  });
 }
