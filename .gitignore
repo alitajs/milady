@@ -1,4 +1,9 @@
 node_modules
 /lib
-/out
 .miladyrc.js
+*.tgz
+package-lock.json
+# 输出文件
+/out
+/mock
+*/services

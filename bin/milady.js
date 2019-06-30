@@ -37,10 +37,8 @@ function getParams() {
     }
   }
   config.swaggerUrl = getArgv() ? getArgv() : config.swaggerUrl;
-  console.log(config);
   return config;
 }
-
 checkVersion();
 const milady = require('../lib/index').default;
 

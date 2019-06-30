@@ -4,7 +4,7 @@
   "description": "Generate the front-end code by parsing the interface document",
   "main": "lib/index.js",
   "bin": {
-    "milady": "./bin/codegen.js"
+    "milady": "./bin/milady.js"
   },
   "scripts": {
     "build": "father-build",
