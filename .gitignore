@@ -7,3 +7,4 @@ package-lock.json
 example/out
 example/mock
 example/*/services
+example/src/page/.umi

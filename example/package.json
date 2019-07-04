@@ -1,0 +1,13 @@
+{
+  "name": "example",
+  "private": true,
+  "scripts": {
+    "start": "umi dev",
+    "milady": "milady",
+    "codegen": "umi codegen"
+  },
+  "devDependencies": {
+    "milady": "../milady-0.0.3.tgz",
+    "umi": "^2.8.8"
+  }
+}
