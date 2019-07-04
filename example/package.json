@@ -7,7 +7,7 @@
     "codegen": "umi codegen"
   },
   "devDependencies": {
-    "milady": "../milady-0.0.3.tgz",
+    "milady": "../milady-v0.0.3.tgz",
     "umi": "^2.8.8"
   }
 }

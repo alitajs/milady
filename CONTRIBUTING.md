@@ -14,10 +14,10 @@ yarn
 yarn run build
 ```
 
-全局链接包（等同于全局安装包）
+封包（方便本地装）
 
 ```zsh
-yarn link
+yarn pack
 ```
 
 ## 命令行调试
@@ -28,8 +28,20 @@ yarn link
 cd exameple
 ```
 
+安装包
+
+```zsh
+yarn
+```
+
 使用命令测试 milady
 
 ```zsh
-milady
+yarn run milady
+```
+
+使用命令测试 umi 插件（测试引用）
+
+```zsh
+yarn run codegen
 ```
