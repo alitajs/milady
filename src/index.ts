@@ -10,7 +10,13 @@ import mock from './plugins/mock';
 import serviceJs from './plugins/serviceJs';
 
 // eslint-disable-next-line space-before-function-paren
-export default async function({ swaggerUrl, plugins }: { swaggerUrl: string; plugins: any[] }) {
+export default async function({
+  swaggerUrl,
+  plugins = [],
+}: {
+  swaggerUrl: string;
+  plugins: any[];
+}) {
   signale.time('milady');
   if (!swaggerUrl) {
     signale.log('必须携带URL地址，如milady https://xx.x.x/abc/v2/api-docs#/');

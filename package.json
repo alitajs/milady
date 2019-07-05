@@ -49,6 +49,7 @@
   "homepage": "https://github.com/alitajs/codegen#readme",
   "dependencies": {
     "@types/node-fetch": "^2.3.7",
+    "@types/signale": "^1.2.1",
     "fs": "^0.0.1-security",
     "fs-extra": "^8.0.1",
     "node-fetch": "^2.6.0",
