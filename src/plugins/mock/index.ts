@@ -9,7 +9,7 @@ function main(SwaggerData: { paths: any; definitions: any }) {
     Object.keys(paths[api]).forEach(method => {
       const { description, responses } = paths[api][method];
       const data =
-        responses['200'].schema && responses['200'].schema.$ref
+        responses['200'] && responses['200'].schema && responses['200'].schema.$ref
           ? `data.${handelRef(responses['200'].schema.$ref)}`
           : null;
       indexStr = indexStr.concat(

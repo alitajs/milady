@@ -160,7 +160,7 @@ export function generateServiceFiles(SwaggerData: {
       additionalParameters = {};
       const subItemData = itemData[subItem];
       const { summary, description, tags: subTags, responses, parameters = [] } = subItemData;
-      const resData = responses['200'].schema;
+      const resData = responses['200'] && responses['200'].schema;
       const url = changeApi(item);
       const name = generateName(item) + toUpperCase(subItem);
       const params = `${toUpperCase(name)}Query`;
