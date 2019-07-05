@@ -3,11 +3,10 @@
   "private": true,
   "scripts": {
     "start": "umi dev",
-    "milady": "milady",
-    "codegen": "umi codegen"
+    "milady": "node --inspect-brk ../bin/milady.js",
+    "codegen": "node --inspect-brk ./node_modules/.bin/umi codegen"
   },
   "devDependencies": {
-    "milady": "../milady-v0.0.3.tgz",
     "umi": "^2.8.8"
   }
 }
