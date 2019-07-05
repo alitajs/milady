@@ -1,4 +1,4 @@
-import milady from 'milady';
+import milady from '../lib';
 
 export default function(api, opts = {}) {
   api.registerCommand('codegen', {}, args => {
