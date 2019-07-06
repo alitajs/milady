@@ -1,9 +1,10 @@
 node_modules
 /lib
-.miladyrc.js
 *.tgz
+*.log
 package-lock.json
 # 输出文件
-/out
-/mock
-*/services
+example/out
+example/mock
+example/*/services
+example/src/page/.umi
