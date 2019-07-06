@@ -1,0 +1,12 @@
+{
+  "name": "example",
+  "private": true,
+  "scripts": {
+    "start": "umi dev",
+    "milady": "node --inspect-brk ../bin/milady.js",
+    "codegen": "node --inspect-brk ./node_modules/.bin/umi codegen"
+  },
+  "devDependencies": {
+    "umi": "^2.8.8"
+  }
+}

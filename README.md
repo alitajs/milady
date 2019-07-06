@@ -12,43 +12,57 @@ Generate the front-end code by parsing the interface document
 
 ## how
 
-### 命令行方案
+### 通过引用使用
 
-1. 检查是否存在配置文件
-2. 不存在则退出程序给出提示，存在则提取配置作为参数进入主函数。
-3. 提示更新包
+安装
 
-### 引用方案
+```js
+npm i milady
+```
 
-1. 引用主函数方法，传入参数配置进入主函数。
+使用
 
-### 主函数
+```js
+import milady from 'milady';
+const config = {
+  swaggerUrl: '', //必填，用于获取数据
+  plugins: [
+    {
+      outPath: '', //输出目录路径
+      handelData: params => {
+        return [{ fileName: 'api.ts', fileStr: params }];
+      }, //传入swagger数据，返回集合fileName是生成的文件名，fileStr是生成的文件内容
+    },
+  ], //可选的，用于自定义输出文件
+};
+milady(config); //传入配置参数，调用milady方法生成文件
+```
 
-- 获取数据：通过 node-fetch 和配置的 url 拿到 swagger 数据。
+### 通过命令行使用
 
-  - 配置：
+安装
 
-  ```js
-  exports.default = {
-    swaggerUrl: '', //推荐的，优先加载命令行的url，命令行没有再加载配置的url
-    plugins: [
-      {
-        outPath: '', //输出目录路径
-        handelData: params => {
-          return [{ fileName: 'api.ts', fileStr: params }];
-        }, //传入swagger数据，返回集合fileName是生成的文件名，fileStr是生成的文件内容
-      },
-    ], //可选的
-  };
-  ```
+```js
+npm i milady -D
+```
 
-- 处理数据：
+使用：
 
-  - 内置处理方式：
-    - mock 数据：
-    1. 支持 mockjs
-    2. 支持配置数据外层，不配置则为默认值，如`{code:200,msg:'成功',data:''}`
-    - service 数据：
-    1. 支持 js、ts 配置
+- 执行命令`milady [swaggerUrl]`生成文件
+- 可选择设置配置`.miladyrc.js`文件进行高级设置，配置文件如下：
 
-- 写入数据：配置文件获得输出文件夹路径，处理数据得到数组`[{ fileName: '', fileStr: '' }]`
+```js
+exports.default = {
+  swaggerUrl: '', //推荐的，优先加载命令行的url，命令行没有再加载配置的url
+  plugins: [
+    {
+      outPath: '', //输出目录路径
+      handelData: params => {
+        return [{ fileName: 'api.ts', fileStr: params }];
+      }, //传入swagger数据，返回集合fileName是生成的文件名，fileStr是生成的文件内容
+    },
+  ], //可选的
+};
+```
+
+当命令和配置文件 swaggerUrl 冲突时使用命令的 swaggerUrl

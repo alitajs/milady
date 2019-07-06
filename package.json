@@ -1,6 +1,6 @@
 {
   "name": "milady",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Generate the front-end code by parsing the interface document",
   "main": "lib/index.js",
   "bin": {
@@ -49,10 +49,12 @@
   "homepage": "https://github.com/alitajs/codegen#readme",
   "dependencies": {
     "@types/node-fetch": "^2.3.7",
+    "@types/signale": "^1.2.1",
     "fs": "^0.0.1-security",
     "fs-extra": "^8.0.1",
     "node-fetch": "^2.6.0",
     "path": "^0.12.7",
+    "signale": "^1.4.0",
     "typescript": "^3.5.2",
     "umi-request": "^1.0.8",
     "yargs-parser": "^13.1.1"
