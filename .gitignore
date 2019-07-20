@@ -3,6 +3,7 @@ node_modules
 *.tgz
 *.log
 package-lock.json
+yarn.lock
 # 输出文件
 example/out
 example/mock
