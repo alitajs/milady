@@ -1,21 +1,29 @@
 import fetch from 'node-fetch';
 import { join } from 'path';
-import { outputFileSync } from 'fs-extra';
+import { outputFileSync, readdirSync } from 'fs-extra';
 import signale from 'signale';
-// eslint-disable-next-line sort-imports
-import serviceTs from './plugins/serviceTs';
-// eslint-disable-next-line sort-imports
-import mock from './plugins/mock';
-// eslint-disable-next-line sort-imports
-import serviceJs from './plugins/serviceJs';
+
+const loadPlugins: string[] = [];
+export interface DefaultPluginsConfig {
+  enabled: boolean;
+}
+export interface DefaultPlugins {
+  [index: string]: DefaultPluginsConfig;
+}
 
 // eslint-disable-next-line space-before-function-paren
 export default async function({
   swaggerUrl,
   plugins = [],
+  defaultPlugins = {
+    mock: { enabled: true },
+    serviceJs: { enabled: false },
+    serviceTs: { enabled: true },
+  },
 }: {
   swaggerUrl: string;
   plugins: any[];
+  defaultPlugins: DefaultPlugins;
 }) {
   signale.time('milady');
   if (!swaggerUrl) {
@@ -25,7 +33,7 @@ export default async function({
   /*  获取数据 */
   const data: any = await getData(swaggerUrl);
   /*  处理数据 */
-  const files = handleData(data, plugins);
+  const files = handleData(data, defaultPlugins, plugins);
   /*  生成代码 */
   codeGen(files);
   signale.timeEnd('milady');
@@ -41,21 +49,25 @@ async function getData(swaggerUrl: string) {
 }
 function handleData(
   SwaggerData: { tags?: never[] | undefined; paths: any; definitions: any },
+  defaultPlugins: DefaultPlugins,
   plugins: any[],
 ) {
-  const directory = [];
+  const directory: any = [];
   /* 加载默认插件 */
-  directory.push({
-    outPath: serviceTs.outPath,
-    file: serviceTs.handelData(SwaggerData),
-  });
-  directory.push({
-    outPath: serviceJs.outPath,
-    file: serviceJs.handelData(SwaggerData),
-  });
-  directory.push({
-    outPath: mock.outPath,
-    file: mock.handelData(SwaggerData),
+  // const a = require('./plugins/mock');
+  const defaultPluginsName = readdirSync('../lib/plugins');
+  defaultPluginsName.forEach(item => {
+    const defaultPlugin = defaultPlugins[item];
+    const str: string = join('../lib/plugins', item);
+    // eslint-disable-next-line global-require,import/no-dynamic-require
+    const defaultPluginFile = require(str).default;
+    if (defaultPlugin.enabled) {
+      directory.push({
+        outPath: defaultPluginFile.outPath,
+        file: defaultPluginFile.handelData(SwaggerData),
+      });
+      loadPlugins.push(item);
+    }
   });
   /* 加载配置插件 */
   if (Object.prototype.toString.call(plugins) === '[object Array]') {
@@ -96,4 +108,5 @@ function codeGen(files: any[]) {
     generate(element.outPath, element.file);
   });
   signale.complete('文件创建完成');
+  signale.complete(`加载插件列表：${loadPlugins.join('、')}`);
 }
