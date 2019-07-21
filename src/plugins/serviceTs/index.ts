@@ -1,5 +1,7 @@
 import { join } from 'path';
+
 import { readFileSync } from 'fs';
+import { strToKey, apiToName } from '../../utils/handelStr';
 
 const GetMethodString = '{\n    params\n  }';
 const PostMethodString = "{\n    method: 'POST',\n    data: params\n  }";
@@ -142,18 +144,20 @@ export function generateServiceFiles(SwaggerData: {
 }) {
   const { tags = [], paths, definitions } = SwaggerData;
   let outPutStr = generateHead(SwaggerData);
+  /* 生成接口文件 */
   Object.keys(definitions).forEach(defItem => {
-    outPutStr += `interface ${generateInterfaceName(defItem)} {\n`;
+    outPutStr += `interface ${strToKey(generateInterfaceName(defItem))} {\n`;
     const properties = definitions[defItem].properties || {};
     Object.keys(properties).forEach(subDefItem => {
       let defItemStr = '   /**\n';
       defItemStr += `    * @description ${properties[subDefItem].description || ''}\n`;
       defItemStr += '    **/\n';
-      defItemStr += `    ${subDefItem}: ${generateType(properties[subDefItem])};\n`;
+      defItemStr += `    ${subDefItem}: ${strToKey(generateType(properties[subDefItem]))};\n`;
       outPutStr += defItemStr;
     });
     outPutStr += '}\n';
   });
+  /* 生成请求文件 */
   Object.keys(paths).forEach(item => {
     const itemData = paths[item];
     Object.keys(itemData).forEach(subItem => {
@@ -162,7 +166,7 @@ export function generateServiceFiles(SwaggerData: {
       const { summary, description, tags: subTags, responses, parameters = [] } = subItemData;
       const resData = responses['200'] && responses['200'].schema;
       const url = changeApi(item);
-      const name = generateName(item) + toUpperCase(subItem);
+      const name = apiToName(item, subItem);
       const params = `${toUpperCase(name)}Query`;
       const paramsMethod = subItem === 'get' ? GetMethodString : PostMethodString;
       let itemTargs = subTags || [];
@@ -197,16 +201,16 @@ export function generateServiceFiles(SwaggerData: {
         return p;
       });
       definition += '}\n';
-      const tpl = join(__dirname, '../../../template/serviceTs/http.ts.tpl');
+      const tpl = join(__dirname, './http.ts.tpl');
       let tplContent = readFileSync(tpl, 'utf-8');
       tplContent = tplContent
         .replace('<%= InterfaceDefinition %>', definition)
         .replace('<%= FunctionTags %>', JSON.stringify(itemTargs))
         .replace('<%= FunctionSummary %>', summary)
         .replace('<%= FunctionDescription %>', description)
-        .replace(new RegExp('<%= FunctionParams %>', 'g'), params)
-        .replace('<%= FunctionName %>', name)
-        .replace('<%= FunctionPromise %>', promise)
+        .replace(new RegExp('<%= FunctionParams %>', 'g'), strToKey(params))
+        .replace('<%= FunctionName %>', strToKey(name))
+        .replace('<%= FunctionPromise %>', strToKey(promise))
         .replace('<%= FunctionUrl %>', url)
         .replace('<%= FunctionParamsMethod %>', paramsMethod);
       outPutStr += tplContent;
