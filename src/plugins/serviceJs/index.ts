@@ -1,3 +1,5 @@
+import { apiToName } from '../../utils/handelStr';
+
 function main(SwaggerData: { paths: any }) {
   const { paths } = SwaggerData;
   let str = "import { stringify } from 'qs';\nimport request from '@/utils/request';\n";
@@ -7,7 +9,7 @@ function main(SwaggerData: { paths: any }) {
         const { description } = paths[api][method];
         str = str.concat(
           services(
-            api.replace(/\//g, '').replace(new RegExp('-', 'g'), '') + method,
+            apiToName(api, method),
             api,
             description && description.replace(/\n/g, ''),
             method,

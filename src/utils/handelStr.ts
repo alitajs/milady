@@ -23,3 +23,24 @@ export function strToKey(params: string) {
   console.log('strToKey执行异常，参数为空');
   return params;
 }
+
+export function apiToName(api: string, method?: string) {
+  const name = strToKey(wordToHump(api, '/'));
+  return method ? name + method.toLocaleUpperCase() : name;
+}
+
+export function wordToHump(params: string, delimiter: string) {
+  return `${params
+    .split(delimiter)
+    .map((item, index) => {
+      if (item) {
+        if (index > 1) {
+          const arr = item.split('');
+          arr[0] = arr[0].toLocaleUpperCase();
+          return arr.join('');
+        }
+      }
+      return item;
+    })
+    .join('')}`;
+}
