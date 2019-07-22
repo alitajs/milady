@@ -8,7 +8,7 @@ import {
   generatePromise,
   generateType,
   toUpperCase,
-} from './index';
+} from '.';
 
 test('changeText', () => {
   expect(changeText('a_b')).toEqual('aB');
