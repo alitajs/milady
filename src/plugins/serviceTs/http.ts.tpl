@@ -1,4 +1,4 @@
-<%= InterfaceGet %>
+<%= InterfaceDefinition %>
 
 /**
  * @tags <%= FunctionTags %>

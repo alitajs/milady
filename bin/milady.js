@@ -25,7 +25,7 @@ function getArgv() {
 }
 function getParams() {
   let config = {
-    swaggerUrl: '',
+    dataSource: '',
   };
   const path = join(process.cwd(), '.miladyrc.js');
   if (existsSync(path)) {
@@ -36,7 +36,7 @@ function getParams() {
       console.log(error);
     }
   }
-  config.swaggerUrl = getArgv() ? getArgv() : config.swaggerUrl;
+  config.dataSource = getArgv() ? getArgv() : config.dataSource;
   return config;
 }
 checkVersion();

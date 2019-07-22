@@ -20,6 +20,7 @@ export default async function({
     mock: { enabled: true },
     serviceJs: { enabled: false },
     serviceTs: { enabled: true },
+    serviceT: { enabled: false },
   },
 }: {
   dataSource: string;
@@ -36,7 +37,7 @@ export default async function({
   if (isUrl(dataSource)) {
     data = await getData(dataSource);
   } else {
-    const str = join(dataSource);
+    const str = join(process.cwd(), dataSource);
     // eslint-disable-next-line global-require,import/no-dynamic-require
     data = require(str);
   }
@@ -82,8 +83,6 @@ function handleData(
       plugins.forEach(element => {
         if (element.hasOwnProperty('url')) {
           const str: string = join(process.cwd(), element.url);
-          console.log(str);
-
           // eslint-disable-next-line global-require,import/no-dynamic-require
           const pluginsFile = require(str).default;
           directory.push({
